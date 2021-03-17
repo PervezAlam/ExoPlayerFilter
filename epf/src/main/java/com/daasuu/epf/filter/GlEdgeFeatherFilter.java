@@ -51,7 +51,7 @@ public class GlEdgeFeatherFilter extends GlFilter {
      * @param featherSize value in pixel
      */
     public void setFeatherSize(int featherSize) {
-        //this.featherSize = featherSize;
+        this.featherSize = featherSize;
     }
 
     @Override
