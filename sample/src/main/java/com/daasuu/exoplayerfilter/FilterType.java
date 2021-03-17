@@ -12,6 +12,7 @@ import com.daasuu.epf.filter.GlBulgeDistortionFilter;
 import com.daasuu.epf.filter.GlCGAColorspaceFilter;
 import com.daasuu.epf.filter.GlContrastFilter;
 import com.daasuu.epf.filter.GlCrosshatchFilter;
+import com.daasuu.epf.filter.GlEdgeFeatherFilter;
 import com.daasuu.epf.filter.GlExposureFilter;
 import com.daasuu.epf.filter.GlFilter;
 import com.daasuu.epf.filter.GlFilterGroup;
@@ -66,6 +67,7 @@ public enum FilterType {
     CGA_COLORSPACE,
     CONTRAST,
     CROSSHATCH,
+    EDGE_FEATHER,
     EXPOSURE,
     FILTER_GROUP_SAMPLE,
     GAMMA,
@@ -183,6 +185,10 @@ public enum FilterType {
                 return glContrastFilter;
             case CROSSHATCH:
                 return new GlCrosshatchFilter();
+            case EDGE_FEATHER:
+                GlEdgeFeatherFilter glEdgeFeatherFilter = new GlEdgeFeatherFilter();
+                glEdgeFeatherFilter.setFeatherSize(100);
+                return glEdgeFeatherFilter;
             case EXPOSURE:
                 return new GlExposureFilter();
             case FILTER_GROUP_SAMPLE:
