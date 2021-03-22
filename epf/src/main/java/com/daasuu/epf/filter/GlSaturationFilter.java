@@ -27,7 +27,7 @@ public class GlSaturationFilter extends GlFilter {
         super(DEFAULT_VERTEX_SHADER, SATURATION_FRAGMENT_SHADER);
     }
 
-    private float saturation = 1f;
+    private float saturation = 0.5f;
 
     public void setSaturation(float saturation) {
         this.saturation = saturation;
