@@ -131,11 +131,9 @@ public class MainActivity extends AppCompatActivity {
 
         Uri uri = Uri.parse(Constant.MEDIA_URL_MP4_4k30FPS_SHORT);
         Intent intent = getIntent();
-        if (intent.getData() == null) {
-            Log.d("ABHI", " No Video Path Selected");
-            return;
+        if (intent.getData() != null) {
+            uri = intent.getData();//DEFAULT_MEDIA_URI;testeer
         }
-        uri = intent.getData();//DEFAULT_MEDIA_URI;
 
         // This is the MediaSource representing the media to be played.
         MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
