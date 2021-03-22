@@ -2,6 +2,7 @@ package com.daasuu.epf.filter;
 
 import android.content.res.Resources;
 import android.opengl.GLES20;
+import android.util.Log;
 
 import java.util.HashMap;
 
@@ -107,7 +108,10 @@ public class GlFilter {
         handleMap.clear();
     }
 
-    public void draw(final int texName, final EFramebufferObject fbo) {
+    synchronized public void draw(final int texName, final EFramebufferObject fbo) {
+//        GLES20.glFinish();
+        long startTime = System.nanoTime();
+
         useProgram();
 
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, vertexBufferName);
@@ -128,6 +132,11 @@ public class GlFilter {
         GLES20.glDisableVertexAttribArray(getHandle("aTextureCoord"));
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+
+        GLES20.glFinish();
+        long finishTime = System.nanoTime();
+
+        Log.d("GLFilter", "Filter: " + getFilterName() + ", Time(ms): " + (finishTime - startTime) / 1000000f);
     }
 
     protected void onDraw() {
