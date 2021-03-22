@@ -133,6 +133,10 @@ public class GlFilter {
     protected void onDraw() {
     }
 
+    protected String getFilterName() {
+        return this.getClass().getSimpleName();
+    }
+
     protected final void useProgram() {
         glUseProgram(program);
     }
