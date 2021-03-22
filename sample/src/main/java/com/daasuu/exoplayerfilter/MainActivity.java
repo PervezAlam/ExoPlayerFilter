@@ -1,5 +1,6 @@
 package com.daasuu.exoplayerfilter;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -125,14 +126,20 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setUpSimpleExoPlayer() {
-
-
         // Produces DataSource instances through which media data is loaded.
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "yourApplicationName"));
 
+        Uri uri = Uri.parse(Constant.MEDIA_URL_MP4_4k30FPS_SHORT);
+        Intent intent = getIntent();
+        if (intent.getData() == null) {
+            Log.d("ABHI", " No Video Path Selected");
+            return;
+        }
+        uri = intent.getData();//DEFAULT_MEDIA_URI;
+
         // This is the MediaSource representing the media to be played.
         MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
-                .createMediaSource(Uri.parse(Constant.STREAM_URL_MP4_VOD_SHORT));
+                .createMediaSource(uri);
 
         // SimpleExoPlayer
         player = ExoPlayerFactory.newSimpleInstance(this);

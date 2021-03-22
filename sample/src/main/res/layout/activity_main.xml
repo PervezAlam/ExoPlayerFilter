@@ -12,12 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="match_parent"
@@ -26,17 +20,38 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp" />
 
-    <Button
-        android:id="@+id/btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="@string/pause" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/picker_button"
+            android:text="Browse Media"/>
 
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pause" />
+
+        <TextView
+            android:id="@+id/tvEffectProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Effect Profile Data"/>
+    </LinearLayout>
+
+    <ListView
+    android:id="@+id/list"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1" />
 
     <TextView
         android:id="@+id/analyticsView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Analytics View" />
+
 </LinearLayout>

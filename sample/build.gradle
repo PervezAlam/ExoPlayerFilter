@@ -20,6 +20,7 @@ android {
     }
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -31,4 +32,8 @@ dependencies {
     implementation project(':epf')
 
     implementation 'com.google.android.exoplayer:exoplayer-core:2.10.5'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.1.0'
+    implementation 'androidx.navigation:navigation-fragment:2.3.0'
+    implementation 'androidx.navigation:navigation-ui:2.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 }
