@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setUpSimpleExoPlayer();
-        setUoGlPlayerView();
+        setUpGlPlayerView();
         setUpTimer();
     }
 
@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setUoGlPlayerView() {
+    private void setUpGlPlayerView() {
         ePlayerView = findViewById(R.id.playerView);
         ePlayerView.setSimpleExoPlayer(player);
         glFilter = FilterType.createGlFilter(FilterType.EDGE_FEATHER, getApplicationContext());
