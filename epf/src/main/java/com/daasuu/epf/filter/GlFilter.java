@@ -68,6 +68,9 @@ public class GlFilter {
 
     private int vertexBufferName;
 
+    private long executionCount = 0;
+    private double totalExecutionTimeMS = 0.0;
+
     private final HashMap<String, Integer> handleMap = new HashMap<String, Integer>();
 
     public GlFilter() {
@@ -92,10 +95,13 @@ public class GlFilter {
     }
 
     public void setFrameSize(final int width, final int height) {
+        Log.d("GLFilter", "setFrameSize(W x H)" + width + ", " + height);
     }
 
 
     public void release() {
+        executionCount = 0;
+        totalExecutionTimeMS = 0.0;
         GLES20.glDeleteProgram(program);
         program = 0;
         GLES20.glDeleteShader(vertexShader);
@@ -108,9 +114,9 @@ public class GlFilter {
         handleMap.clear();
     }
 
-    synchronized public void draw(final int texName, final EFramebufferObject fbo) {
-//        GLES20.glFinish();
-        long startTime = System.nanoTime();
+    public void draw(final int texName, final EFramebufferObject fbo) {
+        GLES20.glFinish();
+        long startTime = System.nanoTime();//Beginning
 
         useProgram();
 
@@ -134,9 +140,12 @@ public class GlFilter {
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 
         GLES20.glFinish();
-        long finishTime = System.nanoTime();
+        long finishTime = System.nanoTime();//Finish
 
-        Log.d("GLFilter", "Filter: " + getFilterName() + ", Time(ms): " + (finishTime - startTime) / 1000000f);
+        double executionTimeMS = (finishTime - startTime) / 1000000.0;
+        ++executionCount;
+        totalExecutionTimeMS += executionTimeMS;
+        Log.d("GLFilter", "Filter: " + getFilterName() + ", Time(ms): " + executionTimeMS);
     }
 
     protected void onDraw() {
@@ -169,6 +178,17 @@ public class GlFilter {
         }
         handleMap.put(name, Integer.valueOf(location));
         return location;
+    }
+
+    public String getPerformanceData() {
+        double avgExecutionTime = totalExecutionTimeMS / executionCount;
+        String performanceData = getFilterName() + ": " + String.format("%.2f ms", avgExecutionTime);
+        Log.d("GLFilter", performanceData);
+        //For time being only one measurement is correct, reset after that
+        //TODO: find play callback to reset the stats
+        totalExecutionTimeMS = 0.0;
+        executionCount = 0;
+        return performanceData;
     }
 
 }
