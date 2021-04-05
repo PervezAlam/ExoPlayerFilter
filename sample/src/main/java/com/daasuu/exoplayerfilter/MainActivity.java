@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -151,12 +153,22 @@ public class MainActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.list);
         final List<FilterType> filterTypes = FilterType.createFilterList();
         listView.setAdapter(new FilterAdapter(this, R.layout.row_text, filterTypes));
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                glFilter = FilterType.createGlFilter(filterTypes.get(position), getApplicationContext());
-                ePlayerView.setGlFilter(glFilter);
+
+        ScrollView scrollView = (ScrollView) findViewById(R.id.scrollView);
+        listView.setOnTouchListener((v, event) -> {
+            scrollView.requestDisallowInterceptTouchEvent(true);
+            int action = event.getActionMasked();
+            switch (action) {
+                case MotionEvent.ACTION_UP:
+                    scrollView.requestDisallowInterceptTouchEvent(false);
+                    break;
             }
+            return false;
+        });
+
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            glFilter = FilterType.createGlFilter(filterTypes.get(position), getApplicationContext());
+            ePlayerView.setGlFilter(glFilter);
         });
     }
 
